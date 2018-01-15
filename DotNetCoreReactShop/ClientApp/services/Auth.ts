@@ -1,0 +1,35 @@
+import RestUtilities from './RestUtilities';
+import AuthStore from '../stores/Auth';
+
+interface IAuthResponse {
+    token: string;
+}
+
+export default class Auth {
+    static isSignedInIn(): boolean {
+        return !!AuthStore.getToken();
+    }
+
+    signInOrRegister(email: string, password: string, isRegister: boolean = false) {
+        return RestUtilities.post<IAuthResponse>(`/api/auth/${isRegister ? 'register' : 'login'}`,
+            `username=${email}&password=${password}${!isRegister ? '&grant_type=password' : ''}`)
+            .then((response) => {
+                if (!response.is_error) {
+                    AuthStore.setToken(response.content.token);
+                }
+                return response;
+            });
+    }
+
+    signIn(email: string, password: string) {
+        return this.signInOrRegister(email, password, false);
+    }
+
+    register(email: string, password: string) {
+        return this.signInOrRegister(email, password, true);
+    }
+
+    signOut(): void {
+        AuthStore.removeToken();
+    }
+}
