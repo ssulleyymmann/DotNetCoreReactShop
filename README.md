@@ -1,13 +1,17 @@
 # DotNetCoreReactShop
-Node.js
-React
-Visual Studio 2017
-ASP.Net Core
+
+Node.js |
+React |
+Visual Studio 2017 |
+ASP.Net Core |
 EF Core
 
 Db entegrasyonu;
+
 Add-Migration dbupdateClient
+
 Update-Database
+
 
 TODO:
 state yönetimi roueter üzerinden yapılmalı veya redux state yönetimide uygulanmalı.
